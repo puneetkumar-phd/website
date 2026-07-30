@@ -112,6 +112,7 @@ window.UPDATE_LIBRARY["2026"] = [
     "id": "2026-07-22-gromacs-docs",
     "date": "2026-07-22",
     "type": "resource",
+    "type": "tutorial",
     "category": "molecular-simulation",
     "title": "GROMACS documentation and tutorial ",
     "summary": "This is the home of the free online GROMACS tutorials. The tutorials are provided as interactive Jupyter notebooks. This is the same content regularly used in training workshops around GROMACS.",
