@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Updates &amp; Tutorials | Dr. Puneet Kumar</title>
+  <meta name="description" content="Date-organised tutorials, research notes, software information, publication alerts, and computational drug-discovery updates from Dr. Puneet Kumar.">
+  <meta name="author" content="Dr. Puneet Kumar"><meta name="theme-color" content="#071523">
+  <meta property="og:type" content="website"><meta property="og:title" content="Updates &amp; Tutorials | Dr. Puneet Kumar"><meta property="og:description" content="Tutorials, research updates, software information, and publication alerts across computational drug discovery."><meta property="og:image" content="assets/img/social-preview.png">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/site-config.js"></script><script defer src="assets/js/main.js"></script>
+
+<style>
+  /* Page-specific styles kept inside updates.html so no other file needs changing. */
+  .latest-news-section {
+    padding-top: clamp(36px, 5vw, 72px);
+    padding-bottom: clamp(28px, 4vw, 56px);
+  }
+
+  .latest-news-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    gap: 20px;
+  }
+
+  .latest-news-card {
+    border: 1px solid var(--line, rgba(126, 185, 221, 0.22));
+    border-radius: 24px;
+    padding: clamp(22px, 3vw, 34px);
+    background: var(--surface, #0e2233);
+    box-shadow: var(--shadow-soft, 0 18px 45px rgba(0, 0, 0, 0.16));
+  }
+
+  .latest-news-card.featured {
+    background:
+      linear-gradient(135deg, rgba(88, 211, 199, 0.09), rgba(105, 167, 255, 0.08)),
+      var(--surface, #0e2233);
+  }
+
+  .news-topline,
+  .resource-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .news-type,
+  .resource-type {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0.25rem 0.62rem;
+    border-radius: 999px;
+    background: rgba(88, 211, 199, 0.12);
+    color: var(--accent, #58d3c7);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .latest-news-card time,
+  .resource-meta time {
+    color: var(--muted, #aabbd0);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .latest-news-card h2,
+  .latest-news-card h3 {
+    margin: 0 0 10px;
+  }
+
+  .latest-news-card p {
+    margin: 0;
+    color: var(--muted, #aabbd0);
+    line-height: 1.7;
+  }
+
+  .latest-news-card .news-link {
+    display: inline-flex;
+    margin-top: 18px;
+  }
+
+  .latest-news-stack {
+    display: grid;
+    gap: 20px;
+  }
+
+  .topic-editor-note {
+    margin-top: 14px;
+    max-width: 920px;
+    padding: 14px 16px;
+    border-left: 3px solid var(--accent, #58d3c7);
+    border-radius: 0 12px 12px 0;
+    background: rgba(88, 211, 199, 0.07);
+    color: var(--muted, #aabbd0);
+    line-height: 1.65;
+  }
+
+  .topic-content {
+    padding: 22px 24px 26px;
+  }
+
+  .topic-intro {
+    margin: 0 0 18px;
+    color: var(--muted, #aabbd0);
+    line-height: 1.7;
+  }
+
+  .topic-resource-list {
+    display: grid;
+    gap: 14px;
+  }
+
+  .topic-resource {
+    padding: 18px;
+    border: 1px solid var(--line, rgba(126, 185, 221, 0.22));
+    border-radius: 16px;
+    background: var(--surface-2, rgba(255, 255, 255, 0.025));
+  }
+
+  .topic-resource h3 {
+    margin: 0;
+    font-size: 1.02rem;
+    line-height: 1.4;
+  }
+
+  .topic-resource p {
+    margin: 8px 0 0;
+    color: var(--muted, #aabbd0);
+    line-height: 1.65;
+  }
+
+  .resource-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0.42rem 0.72rem;
+    border: 1px solid var(--line, rgba(126, 185, 221, 0.22));
+    border-radius: 999px;
+    color: var(--text, #edf4ff);
+    background: var(--surface, #0e2233);
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .resource-link:hover,
+  .resource-link:focus-visible {
+    color: var(--accent, #58d3c7);
+    border-color: var(--accent, #58d3c7);
+  }
+
+  .resource-link.pending {
+    color: var(--muted, #aabbd0);
+    cursor: default;
+  }
+
+  .resource-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .resource-tags span {
+    padding: 0.25rem 0.52rem;
+    border-radius: 999px;
+    background: rgba(105, 167, 255, 0.09);
+    color: var(--muted, #aabbd0);
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 900px) {
+    .latest-news-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .latest-news-card,
+    .topic-content {
+      padding: 18px;
+    }
+
+    .news-topline,
+    .resource-meta {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>
+
+</head>
+<body data-page="updates">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html" aria-label="Puneet Kumar home"><span class="brand-mark">PK</span><span>Dr. Puneet Kumar<small>Computational Biologist</small></span></a>
+    <nav class="nav-links" aria-label="Primary navigation"><a href="index.html" data-nav="home">Home</a><a href="updates.html" data-nav="updates">Updates</a><a href="publications.html" data-nav="publications">Publications</a><a href="projects.html" data-nav="projects">Projects</a><a href="talks.html" data-nav="talks">Talks</a><a href="teaching.html" data-nav="teaching">Teaching</a><a href="cv.html" data-nav="cv">CV</a></nav>
+    <div class="nav-actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Switch color theme"></button>
+      <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-expanded="false" aria-label="Open navigation menu"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3"/></svg></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+<section class="page-hero updates-hero">
+  <div class="container reveal">
+    <div class="eyebrow">Research notes, tutorials &amp; alerts</div>
+    <h1>Updates</h1>
+    <p class="lead">A date-organised research log for practical tutorials, software and environment notes, publication alerts, project updates, and selected resources across computational drug discovery.</p>
+    <div class="filter-bar updates-filter" aria-label="Filter updates by content type">
+      <button class="filter-btn active" type="button" data-update-filter="all">All</button>
+      <button class="filter-btn" type="button" data-update-filter="tutorial">Tutorials</button>
+      <button class="filter-btn" type="button" data-update-filter="software">Software</button>
+      <button class="filter-btn" type="button" data-update-filter="research">Research updates</button>
+      <button class="filter-btn" type="button" data-update-filter="publication">Publication alerts</button>
+      <button class="filter-btn" type="button" data-update-filter="resource">Resources</button>
+    </div>
+  </div>
+</section>
+
+
+<section class="section latest-news-section" aria-labelledby="latest-news-title">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-kicker">Current notices</div>
+        <h2 id="latest-news-title">Latest news &amp; updates</h2>
+        <p>Use this section for vacancies, collaboration calls, weekly research notes, software milestones, publication announcements, and time-sensitive notices.</p>
+      </div>
+    </div>
+
+    <div class="latest-news-grid">
+      <!--
+        LATEST-NEWS TEMPLATE:
+        Duplicate one <article class="latest-news-card">...</article> block.
+        Edit the date, label, title, paragraph and optional link.
+        Keep the newest item first.
+      -->
+      <article class="latest-news-card featured reveal" data-update-type="research software">
+        <div class="news-topline">
+          <span class="news-type">Latest research update</span>
+          <time datetime="2026-07-30">30 July 2026</time>
+        </div>
+        <h2>GPU molecular-simulation environment: configuration and validation in progress</h2>
+        <p>I am building a reproducible GPU-enabled research environment for molecular dynamics, enhanced sampling, free-energy calculations, cheminformatics, and machine-learning workflows. Installation records, validation tests, and reusable tutorials will be posted on this page as they are completed.</p>
+        <a class="btn primary news-link" href="#knowledge-areas">Browse technical resources</a>
+      </article>
+
+      <div class="latest-news-stack">
+        <article class="latest-news-card reveal" data-update-type="research resource">
+          <div class="news-topline">
+            <span class="news-type">Vacancies &amp; opportunities</span>
+            <time datetime="2026-07-30">Updated 30 July 2026</time>
+          </div>
+          <h3>No active vacancy posted at present</h3>
+          <p>Future openings, collaboration opportunities, student projects, workshops, and application deadlines can be published here.</p>
+        </article>
+
+        <article class="latest-news-card reveal" data-update-type="publication">
+          <div class="news-topline">
+            <span class="news-type">Publication alert</span>
+            <time datetime="2026-07-30">Updated 30 July 2026</time>
+          </div>
+          <h3>Publication and preprint announcements</h3>
+          <p>New papers, accepted manuscripts, datasets, conference presentations, and related research outputs can be highlighted here with direct links.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section topic-section" id="knowledge-areas">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-kicker">Browse by discipline</div>
+        <h2>Major knowledge areas</h2>
+        <p>Open any category to view linked tutorials, software documentation, code repositories, protocols, and short descriptions.</p>
+        <div class="topic-editor-note">
+          <strong>How to add a new link:</strong> open <code>updates.html</code> in GitHub, duplicate one complete
+          <code>&lt;article class="topic-resource"&gt;</code> block inside the relevant dropdown, then edit its title,
+          description, date, tags, and the URL in <code>href="..."</code>.
+        </div>
+      </div>
+    </div>
+
+    <!--
+      GENERIC RESOURCE TEMPLATE
+      Copy this block into any .topic-resource-list and replace the capitalised placeholders:
+
+      <article class="topic-resource">
+        <div class="resource-meta">
+          <span class="resource-type">RESOURCE TYPE</span>
+          <time datetime="YYYY-MM-DD">DD Month YYYY</time>
+        </div>
+        <h3>RESOURCE TITLE</h3>
+        <p>ONE-PARAGRAPH DESCRIPTION OF WHAT THE LINK CONTAINS AND WHY IT IS USEFUL.</p>
+        <div class="resource-actions">
+          <a class="resource-link" href="https://YOUR-LINK-HERE" target="_blank" rel="noopener">Open resource</a>
+          <div class="resource-tags"><span>TAG 1</span><span>TAG 2</span></div>
+        </div>
+      </article>
+    -->
+
+    <div class="topic-accordion">
+      <details class="topic-detail reveal" open>
+        <summary><span class="topic-index">01</span><span><strong>Molecular simulation &amp; free-energy methods</strong><small>GROMACS, AMBER, Desmond, PLUMED, enhanced sampling, FEP/TI, MM/PB(GB)SA, and trajectory analysis</small></span><span class="detail-icon" aria-hidden="true"></span></summary>
+        <div class="topic-content">
+          <p class="topic-intro">Installation notes, validated workflows, simulation protocols, enhanced-sampling strategies, convergence checks, and reproducible analysis examples.</p>
+          <div class="topic-resource-list">
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Official software</span><time datetime="2026-07-30">30 July 2026</time></div>
+              <h3>PLUMED: enhanced sampling and free-energy methods</h3>
+              <p>PLUMED is a community-developed, open-source library for enhanced sampling, free-energy methods, collective variables, and molecular-dynamics trajectory analysis. It can be used with major simulation engines, including GROMACS and AMBER.</p>
+              <div class="resource-actions">
+                <a class="resource-link" href="https://www.plumed.org/" target="_blank" rel="noopener">Visit PLUMED</a>
+                <div class="resource-tags"><span>PLUMED</span><span>Metadynamics</span><span>Free energy</span></div>
+              </div>
+            </article>
+
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Documentation</span><time datetime="2026-07-30">30 July 2026</time></div>
+              <h3>GROMACS documentation and reference manual</h3>
+              <p>The official documentation provides installation guidance, user workflows, command references, algorithm descriptions, and version-specific release information for molecular-dynamics simulations.</p>
+              <div class="resource-actions">
+                <a class="resource-link" href="https://manual.gromacs.org/" target="_blank" rel="noopener">Open GROMACS documentation</a>
+                <div class="resource-tags"><span>GROMACS</span><span>Molecular dynamics</span><span>Reference manual</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </details>
+
+      <details class="topic-detail reveal">
+        <summary><span class="topic-index">02</span><span><strong>Computational chemistry &amp; structure-based design</strong><small>Docking, virtual screening, QM/MM, DFT, binding-site analysis, and lead optimisation</small></span><span class="detail-icon" aria-hidden="true"></span></summary>
+        <div class="topic-content">
+          <p class="topic-intro">Practical notes on protein and ligand preparation, docking validation, quantum calculations, mechanistic interpretation, and structure-guided prioritisation.</p>
+          <div class="topic-resource-list">
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Software documentation</span><time datetime="2026-07-30">30 July 2026</time></div>
+              <h3>AutoDock Vina documentation</h3>
+              <p>AutoDock Vina is an open-source molecular-docking engine. Its documentation covers installation, receptor and ligand preparation, search-space definition, scoring options, Python bindings, and practical docking examples.</p>
+              <div class="resource-actions">
+                <a class="resource-link" href="https://autodock-vina.readthedocs.io/en/latest/" target="_blank" rel="noopener">Open Vina documentation</a>
+                <div class="resource-tags"><span>Docking</span><span>Virtual screening</span><span>Python</span></div>
+              </div>
+            </article>
+
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Your future tutorial</span><time datetime="2026-07-30">Template</time></div>
+              <h3>My docking, QM/MM, or DFT workflow</h3>
+              <p>Replace this paragraph with a concise description of your protocol, code repository, input files, validation strategy, expected outputs, and the scientific question addressed.</p>
+              <div class="resource-actions">
+                <!-- Replace the span below with an <a class="resource-link" href="YOUR_URL"...> when the resource is ready. -->
+                <span class="resource-link pending">Add tutorial or repository link</span>
+                <div class="resource-tags"><span>Your code</span><span>Protocol</span><span>Validation</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </details>
+
+      <details class="topic-detail reveal">
+        <summary><span class="topic-index">03</span><span><strong>Cheminformatics &amp; QSAR</strong><small>RDKit, descriptors, fingerprints, molecular curation, chemical space, and predictive modelling</small></span><span class="detail-icon" aria-hidden="true"></span></summary>
+        <div class="topic-content">
+          <p class="topic-intro">Data-cleaning workflows, molecular representations, scaffold analysis, QSAR validation, applicability domains, and interpretation of structure-activity relationships.</p>
+          <div class="topic-resource-list">
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Official documentation</span><time datetime="2026-07-30">30 July 2026</time></div>
+              <h3>RDKit documentation, cookbook, and Python API</h3>
+              <p>The RDKit documentation provides installation instructions, Python tutorials, molecular descriptors, fingerprints, substructure operations, chemical reactions, visualisation utilities, and API references for cheminformatics workflows.</p>
+              <div class="resource-actions">
+                <a class="resource-link" href="https://www.rdkit.org/docs/index.html" target="_blank" rel="noopener">Open RDKit documentation</a>
+                <div class="resource-tags"><span>RDKit</span><span>Descriptors</span><span>Fingerprints</span></div>
+              </div>
+            </article>
+
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Your code repository</span><time datetime="2026-07-30">Template</time></div>
+              <h3>My RDKit analysis codes</h3>
+              <p>Use this card for your GitHub repository or notebook collection. Describe the analyses included, such as molecular standardisation, descriptor generation, fingerprints, similarity analysis, scaffold extraction, chemical-space visualisation, or QSAR preparation.</p>
+              <div class="resource-actions">
+                <!-- Example replacement:
+                <a class="resource-link" href="https://github.com/YOUR-USERNAME/YOUR-RDKIT-REPOSITORY" target="_blank" rel="noopener">View my RDKit code</a>
+                -->
+                <span class="resource-link pending">Add your GitHub repository link</span>
+                <div class="resource-tags"><span>My code</span><span>GitHub</span><span>Cheminformatics</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </details>
+
+      <details class="topic-detail reveal">
+        <summary><span class="topic-index">04</span><span><strong>Bioinformatics &amp; multi-omics</strong><small>Transcriptomics, scRNA-seq, spatial data, pathway analysis, biomarkers, and target discovery</small></span><span class="detail-icon" aria-hidden="true"></span></summary>
+        <div class="topic-content">
+          <p class="topic-intro">Reproducible workflows for expression analysis, enrichment, disease-signature interpretation, biomarker discovery, and cross-omics integration.</p>
+          <div class="topic-resource-list">
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Official ecosystem</span><time datetime="2026-07-30">30 July 2026</time></div>
+              <h3>Bioconductor software, workflows, and training resources</h3>
+              <p>Bioconductor is an open-source R ecosystem for reproducible analysis of biological data. It provides packages, vignettes, books, workflows, and training materials for genomics, transcriptomics, annotation, and related bioinformatics tasks.</p>
+              <div class="resource-actions">
+                <a class="resource-link" href="https://www.bioconductor.org/" target="_blank" rel="noopener">Visit Bioconductor</a>
+                <div class="resource-tags"><span>R</span><span>Transcriptomics</span><span>Bioconductor</span></div>
+              </div>
+            </article>
+
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Your workflow</span><time datetime="2026-07-30">Template</time></div>
+              <h3>My transcriptomic or multi-omics analysis workflow</h3>
+              <p>Add a link to your repository, notebook, protocol, or tutorial and summarise the dataset, preprocessing, statistical analysis, biological interpretation, outputs, and reproducibility information.</p>
+              <div class="resource-actions">
+                <span class="resource-link pending">Add workflow link</span>
+                <div class="resource-tags"><span>Your code</span><span>Omics</span><span>Reproducibility</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </details>
+
+      <details class="topic-detail reveal">
+        <summary><span class="topic-index">05</span><span><strong>Machine learning &amp; AI for drug discovery</strong><small>Classical ML, deep learning, graph neural networks, explainability, uncertainty, and experiment tracking</small></span><span class="detail-icon" aria-hidden="true"></span></summary>
+        <div class="topic-content">
+          <p class="topic-intro">Conceptual guides and implementation notes for molecular-property prediction, model validation, hyperparameter optimisation, explainable AI, and reproducible ML experiments.</p>
+          <div class="topic-resource-list">
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Official user guide</span><time datetime="2026-07-30">30 July 2026</time></div>
+              <h3>scikit-learn user guide</h3>
+              <p>The scikit-learn user guide covers supervised and unsupervised learning, preprocessing, pipelines, cross-validation, model selection, evaluation metrics, feature selection, and practical machine-learning implementation in Python.</p>
+              <div class="resource-actions">
+                <a class="resource-link" href="https://scikit-learn.org/stable/user_guide.html" target="_blank" rel="noopener">Open user guide</a>
+                <div class="resource-tags"><span>Machine learning</span><span>Python</span><span>Validation</span></div>
+              </div>
+            </article>
+
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Your notebook series</span><time datetime="2026-07-30">Template</time></div>
+              <h3>My QSAR, explainability, or graph-learning notebooks</h3>
+              <p>Link to your code and explain the prediction task, dataset, molecular representation, validation design, metrics, interpretation method, trained model, and limitations.</p>
+              <div class="resource-actions">
+                <span class="resource-link pending">Add notebook or repository link</span>
+                <div class="resource-tags"><span>QSAR</span><span>Explainable AI</span><span>GNN</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </details>
+
+      <details class="topic-detail reveal">
+        <summary><span class="topic-index">06</span><span><strong>Research software, Linux &amp; reproducibility</strong><small>GPU environments, CUDA, Conda/Mamba, GitHub, automation, benchmarking, and troubleshooting</small></span><span class="detail-icon" aria-hidden="true"></span></summary>
+        <div class="topic-content">
+          <p class="topic-intro">Installation records, dependency management, GPU validation, shell automation, environment export, version control, and publication-grade computational documentation.</p>
+          <div class="topic-resource-list">
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Environment management</span><time datetime="2026-07-30">30 July 2026</time></div>
+              <h3>Mamba and Micromamba documentation</h3>
+              <p>Mamba is a fast package and environment manager compatible with Conda packages. Its documentation covers installation, environment creation, dependency management, configuration, and reproducible command-line workflows.</p>
+              <div class="resource-actions">
+                <a class="resource-link" href="https://mamba.readthedocs.io/en/stable/" target="_blank" rel="noopener">Open Mamba documentation</a>
+                <div class="resource-tags"><span>Mamba</span><span>Conda</span><span>Environments</span></div>
+              </div>
+            </article>
+
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Your installation record</span><time datetime="2026-07-30">Template</time></div>
+              <h3>My GPU software installation and validation notes</h3>
+              <p>Use this entry for verified commands, environment files, compiler and CUDA versions, benchmark results, troubleshooting notes, and reproducibility checks for your research workstation.</p>
+              <div class="resource-actions">
+                <span class="resource-link pending">Add installation guide link</span>
+                <div class="resource-tags"><span>Linux</span><span>CUDA</span><span>Reproducibility</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </details>
+
+      <details class="topic-detail reveal">
+        <summary><span class="topic-index">07</span><span><strong>Publications, conferences &amp; field alerts</strong><small>New papers, methods, datasets, workshops, talks, opportunities, and vacancies</small></span><span class="detail-icon" aria-hidden="true"></span></summary>
+        <div class="topic-content">
+          <p class="topic-intro">Short, dated alerts highlighting publications, software releases, datasets, meetings, training opportunities, collaboration calls, and vacancies relevant to computational drug discovery.</p>
+          <div class="topic-resource-list">
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Publication profile</span><time datetime="2026-07-30">Current</time></div>
+              <h3>My Google Scholar publication profile</h3>
+              <p>Use this link for the current publication list, citation record, related articles, and author metrics. Individual paper alerts can be added as separate cards above this entry.</p>
+              <div class="resource-actions">
+                <a class="resource-link" href="https://scholar.google.com/citations?hl=en&amp;user=aHLch4UAAAAJ" target="_blank" rel="noopener">Open Google Scholar</a>
+                <div class="resource-tags"><span>Publications</span><span>Citations</span><span>Research profile</span></div>
+              </div>
+            </article>
+
+            <article class="topic-resource">
+              <div class="resource-meta"><span class="resource-type">Alert template</span><time datetime="2026-07-30">Template</time></div>
+              <h3>Conference, workshop, vacancy, or publication alert</h3>
+              <p>Replace this text with the announcement summary. Include the organiser or journal, deadline or publication date, eligibility, relevance to your audience, and the direct application or article link.</p>
+              <div class="resource-actions">
+                <span class="resource-link pending">Add announcement link</span>
+                <div class="resource-tags"><span>Deadline</span><span>Opportunity</span><span>Alert</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section alt updates-archive-section">
+
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-kicker">Chronological archive</div>
+        <h2>Latest posts and updates</h2>
+        <p>Posts are grouped by year and month. New entries can be added at the top of the relevant month.</p>
+      </div>
+    </div>
+
+    <div class="updates-archive">
+      <details class="archive-year reveal" open>
+        <summary><span>2026</span><small>Current archive</small><span class="detail-icon" aria-hidden="true"></span></summary>
+        <div class="archive-year-content">
+          <details class="archive-month" open>
+            <summary><span>July 2026</span><small>4 entries</small><span class="detail-icon" aria-hidden="true"></span></summary>
+            <div class="update-list">
+              <article class="update-card" data-update-type="research software">
+                <time datetime="2026-07-30">30 July 2026</time>
+                <div class="update-card-body">
+                  <div class="update-topline"><span class="update-category">Research update</span><span class="update-status">New</span></div>
+                  <h3>Reframing the homepage around my research profile and mentorship</h3>
+                  <p>The homepage now keeps my portrait and research identity as the primary visual focus, with a separate section describing research mentorship and the broader data-driven drug-discovery environment at Khalifa University.</p>
+                  <div class="tags"><span class="tag">Website</span><span class="tag">Research profile</span><span class="tag">Khalifa University</span></div>
+                </div>
+              </article>
+
+              <article class="update-card" data-update-type="software tutorial">
+                <time datetime="2026-07-29">29 July 2026</time>
+                <div class="update-card-body">
+                  <div class="update-topline"><span class="update-category">Software note</span><span class="update-status in-progress">In progress</span></div>
+                  <h3>Building a GPU-accelerated GROMACS and PLUMED research environment</h3>
+                  <p>Configuration and validation work is focused on GPU-enabled molecular dynamics, enhanced sampling, metadynamics, umbrella sampling, trajectory analysis, and reproducible installation records.</p>
+                  <div class="tags"><span class="tag">GROMACS</span><span class="tag">PLUMED</span><span class="tag">CUDA</span><span class="tag">Reproducibility</span></div>
+                </div>
+              </article>
+
+              <article class="update-card" data-update-type="research resource">
+                <time datetime="2026-07-28">28 July 2026</time>
+                <div class="update-card-body">
+                  <div class="update-topline"><span class="update-category">Research roadmap</span><span class="update-status in-progress">Planned</span></div>
+                  <h3>Machine-learning roadmap for cheminformatics and molecular discovery</h3>
+                  <p>The planned stack covers classical QSAR, deep learning, graph neural networks, model explainability, hyperparameter optimisation, uncertainty assessment, and reproducible experiment tracking.</p>
+                  <div class="tags"><span class="tag">QSAR</span><span class="tag">GNN</span><span class="tag">Explainable AI</span><span class="tag">ML workflows</span></div>
+                </div>
+              </article>
+
+              <article class="update-card" data-update-type="tutorial software resource">
+                <time datetime="2026-07-24">24 July 2026</time>
+                <div class="update-card-body">
+                  <div class="update-topline"><span class="update-category">Tutorial series</span><span class="update-status in-progress">Planned</span></div>
+                  <h3>From installation to validation: reproducible computational research notes</h3>
+                  <p>Future tutorials will record exact installation commands, environment files, version checks, benchmark tests, troubleshooting decisions, and validated workflows for reuse by other researchers.</p>
+                  <div class="tags"><span class="tag">Linux</span><span class="tag">GitHub</span><span class="tag">Environment management</span></div>
+                </div>
+              </article>
+            </div>
+          </details>
+
+          <details class="archive-month">
+            <summary><span>June 2026</span><small>Use this month for earlier posts</small><span class="detail-icon" aria-hidden="true"></span></summary>
+            <div class="empty-month">No public entries added yet.</div>
+          </details>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><a class="brand" href="index.html"><span class="brand-mark">PK</span><span>Dr. Puneet Kumar<small>Drug Discovery · Chemoinformatics · Computational Biology · ML</small></span></a><p>Investigating disease mechanisms at atomic and molecular resolution and translating those insights into actionable drug discovery strategies.</p></div>
+      <div><div class="footer-title">Explore</div><div class="footer-links"><a href="updates.html">Updates</a><a href="publications.html">Publications</a><a href="projects.html">Projects</a><a href="talks.html">Talks</a><a href="teaching.html">Teaching</a><a href="cv.html">Curriculum vitae</a></div></div>
+      <div><div class="footer-title">Website visits</div><div class="counter-shell"><div id="visitor-count"><span class="counter-placeholder">Counter activates after GoatCounter setup.</span></div></div><div class="footer-links"><a href="mailto:puneetkumar.phd@gmail.com">puneetkumar.phd@gmail.com</a><a href="https://scholar.google.com/citations?hl=en&amp;user=aHLch4UAAAAJ" target="_blank" rel="noopener">Google Scholar</a><a href="https://www.linkedin.com/in/puneet-kumar-b0312195/" target="_blank" rel="noopener">LinkedIn</a></div></div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-current-year></span> Puneet Kumar. All rights reserved.</span><span>आत्मैव ह्यात्मनो बन्धुः। Meaning: The mind can be one’s greatest friend. </span></div>
+  </div>
+</footer>
+</body></html>
