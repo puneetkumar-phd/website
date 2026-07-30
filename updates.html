@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Updates &amp; Tutorials | Dr. Puneet Kumar</title>
+<meta content="Date-organised tutorials, research notes, software information, publication alerts, and computational drug-discovery updates from Dr. Puneet Kumar." name="description"/>
+<meta content="Dr. Puneet Kumar" name="author"/><meta content="#071523" name="theme-color"/>
+<meta content="website" property="og:type"/><meta content="Updates &amp; Tutorials | Dr. Puneet Kumar" property="og:title"/><meta content="Tutorials, research updates, software information, and publication alerts across computational drug discovery." property="og:description"/><meta content="assets/img/social-preview.png" property="og:image"/>
+<link href="assets/img/favicon.svg" rel="icon" type="image/svg+xml"/><link href="assets/css/styles.css" rel="stylesheet"/>
+<script src="assets/js/site-config.js"></script><script defer="" src="assets/js/main.js"></script><script defer="" src="assets/data/updates-index.js"></script><script defer="" src="assets/js/updates-page.js"></script>
+
+<style>
+  /* Scalable Updates page: content is loaded from one data file per year. */
+  .updates-shell { padding-top: clamp(34px, 5vw, 70px); }
+  .updates-section-head { max-width: 850px; margin-bottom: 24px; }
+  .updates-section-head h2 { margin-bottom: 8px; }
+  .updates-section-head p { margin: 0; color: var(--muted); line-height: 1.7; }
+
+  .notice-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .notice-card,
+  .category-card,
+  .resource-card,
+  .updates-controls {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
+  }
+  .notice-card { padding: 20px; border-radius: 20px; }
+  .notice-card:first-child { background: linear-gradient(135deg, rgba(88,211,199,.10), rgba(105,167,255,.07)), var(--surface); }
+  .notice-meta,
+  .resource-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .notice-kind,
+  .resource-type {
+    display: inline-flex; align-items: center; min-height: 27px; padding: .22rem .58rem;
+    border-radius: 999px; background: rgba(88,211,199,.12); color: var(--accent);
+    font-size: .7rem; font-weight: 850; letter-spacing: .055em; text-transform: uppercase;
+  }
+  .notice-card time,
+  .resource-card time { color: var(--muted); font-size: .76rem; font-weight: 700; }
+  .notice-card h3 { margin: 0 0 9px; font-size: 1.05rem; line-height: 1.35; }
+  .notice-card p,
+  .resource-card p { margin: 0; color: var(--muted); line-height: 1.65; }
+  .notice-link { display: inline-flex; margin-top: 14px; }
+  .empty-state { padding: 22px; border: 1px dashed var(--line); border-radius: 18px; color: var(--muted); background: var(--surface-2); }
+
+  .category-directory { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+  .category-card {
+    appearance: none; width: 100%; padding: 16px; border-radius: 17px; color: var(--text);
+    font: inherit; text-align: left; cursor: pointer; transition: transform .18s ease, border-color .18s ease;
+  }
+  .category-card:hover,
+  .category-card:focus-visible,
+  .category-card.is-active { transform: translateY(-2px); border-color: var(--accent); }
+  .category-card strong { display: block; margin-bottom: 6px; line-height: 1.35; }
+  .category-card small { display: block; color: var(--muted); line-height: 1.45; }
+  .category-count { display: inline-flex; margin-top: 10px; color: var(--accent); font-size: .76rem; font-weight: 800; }
+
+  .updates-controls {
+    display: grid; grid-template-columns: minmax(220px, 1.5fr) repeat(3, minmax(150px, .7fr)) auto;
+    gap: 12px; padding: 18px; margin: 26px 0 18px; border-radius: 20px;
+  }
+  .updates-field { display: grid; gap: 6px; }
+  .updates-field label { color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+  .updates-field input,
+  .updates-field select {
+    width: 100%; min-height: 44px; padding: 0 .8rem; border: 1px solid var(--line); border-radius: 12px;
+    color: var(--text); background: var(--surface-2); font: inherit;
+  }
+  .updates-field input:focus,
+  .updates-field select:focus { outline: 2px solid color-mix(in srgb, var(--accent) 65%, transparent); outline-offset: 2px; }
+  .updates-clear { align-self: end; min-height: 44px; white-space: nowrap; }
+
+  .results-bar { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+  .results-bar p { margin: 0; color: var(--muted); }
+  .results-bar strong { color: var(--text); }
+
+  .resource-list { display: grid; gap: 14px; }
+  .resource-card { display: grid; grid-template-columns: 125px minmax(0, 1fr); gap: 18px; padding: 20px; border-radius: 18px; }
+  .resource-date { color: var(--accent); font-size: .84rem; font-weight: 850; line-height: 1.45; }
+  .resource-card h3 { margin: 0 0 8px; font-size: 1.12rem; line-height: 1.4; }
+  .resource-card h3 a { color: inherit; text-decoration: none; }
+  .resource-card h3 a:hover,
+  .resource-card h3 a:focus-visible { color: var(--accent); }
+  .resource-category { color: var(--muted); font-size: .78rem; font-weight: 750; }
+  .resource-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+  .resource-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .resource-tags span { padding: .24rem .5rem; border-radius: 999px; background: rgba(105,167,255,.09); color: var(--muted); font-size: .7rem; font-weight: 700; }
+  .resource-link {
+    display: inline-flex; align-items: center; min-height: 34px; padding: .4rem .72rem;
+    border: 1px solid var(--line); border-radius: 999px; color: var(--text); background: var(--surface-2);
+    font-size: .76rem; font-weight: 800; text-decoration: none;
+  }
+  .resource-link:hover,
+  .resource-link:focus-visible { color: var(--accent); border-color: var(--accent); }
+
+  .updates-pagination { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 24px; }
+  .updates-pagination button { min-width: 42px; min-height: 40px; }
+  .page-indicator { color: var(--muted); font-size: .84rem; }
+
+  .maintenance-note { margin-top: 24px; padding: 16px 18px; border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; background: rgba(88,211,199,.07); color: var(--muted); line-height: 1.65; }
+  .maintenance-note code { color: var(--text); }
+
+  @media (max-width: 1100px) {
+    .notice-grid { grid-template-columns: 1fr 1fr; }
+    .category-directory { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .updates-controls { grid-template-columns: 1fr 1fr; }
+    .updates-clear { width: 100%; }
+  }
+  @media (max-width: 720px) {
+    .notice-grid,
+    .category-directory,
+    .updates-controls { grid-template-columns: 1fr; }
+    .resource-card { grid-template-columns: 1fr; }
+    .resource-date { margin-bottom: -4px; }
+  }
+</style></head>
+<body data-page="updates">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="container nav-wrap">
+<a aria-label="Puneet Kumar home" class="brand" href="index.html"><span class="brand-mark">PK</span><span>Dr. Puneet Kumar<small>Computational Biologist</small></span></a>
+<nav aria-label="Primary navigation" class="nav-links"><a data-nav="home" href="index.html">Home</a><a data-nav="updates" href="updates.html">Updates</a><a data-nav="publications" href="publications.html">Publications</a><a data-nav="projects" href="projects.html">Projects</a><a data-nav="talks" href="talks.html">Talks</a><a data-nav="teaching" href="teaching.html">Teaching</a><a data-nav="cv" href="cv.html">CV</a></nav>
+<div class="nav-actions">
+<button aria-label="Switch color theme" class="icon-btn" data-theme-toggle="" type="button"></button>
+<button aria-expanded="false" aria-label="Open navigation menu" class="icon-btn menu-btn" data-menu-toggle="" type="button"><svg aria-hidden="true" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="20"><path d="M4 19V9M10 19V5M16 19v-7M22 19V3"></path></svg></button>
+</div>
+</div>
+</header>
+<main id="main">
+<section class="page-hero updates-hero">
+<div class="container reveal">
+<div class="eyebrow">Research notes, tutorials &amp; alerts</div>
+<h1>Updates</h1>
+<p class="lead">A date-organised research log for practical tutorials, software and environment notes, publication alerts, project updates, and selected resources across computational drug discovery.</p>
+
+</div>
+</section>
+
+
+
+
+<section aria-labelledby="latest-heading" class="section updates-shell">
+<div class="container">
+<div class="updates-section-head reveal">
+<div class="section-kicker">Current notices</div>
+<h2 id="latest-heading">Latest news &amp; updates</h2>
+<p>Only a few current or time-sensitive items appear here. Older items remain searchable in the archive below.</p>
+</div>
+<div aria-live="polite" class="notice-grid" id="latest-notices">
+<div class="empty-state">Loading current notices...</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="library-heading" class="section alt" id="resource-library">
+<div class="container">
+<div class="updates-section-head reveal">
+<div class="section-kicker">Long-term resource library</div>
+<h2 id="library-heading">Search, filter, and browse without endless scrolling</h2>
+<p>Resources are stored by year, displayed ten at a time, and can be filtered by discipline, content type, year, keyword, software name, or tag.</p>
+</div>
+<div aria-label="Filter by knowledge area" class="category-directory" id="category-directory"></div>
+<div aria-label="Resource filters" class="updates-controls">
+<div class="updates-field">
+<label for="updates-search">Search</label>
+<input autocomplete="off" id="updates-search" placeholder="Search PLUMED, RDKit, dataset, QSAR..." type="search"/>
+</div>
+<div class="updates-field">
+<label for="updates-category">Knowledge area</label>
+<select id="updates-category"></select>
+</div>
+<div class="updates-field">
+<label for="updates-type">Content type</label>
+<select id="updates-type"></select>
+</div>
+<div class="updates-field">
+<label for="updates-year">Year</label>
+<select id="updates-year"></select>
+</div>
+<button class="btn updates-clear" id="updates-clear" type="button">Clear filters</button>
+</div>
+<div class="results-bar">
+<p id="results-summary">Loading resources...</p>
+<p>Newest first · 10 items per page</p>
+</div>
+<div aria-live="polite" class="resource-list" id="resource-list"></div>
+<nav aria-label="Resource pages" class="updates-pagination">
+<button class="small-btn" id="page-prev" type="button">Previous</button>
+<span class="page-indicator" id="page-indicator">Page 1 of 1</span>
+<button class="small-btn" id="page-next" type="button">Next</button>
+</nav>
+<div class="maintenance-note">
+<strong>Maintenance model:</strong> add weekly or monthly entries only to the current-year file, for example
+      <code>assets/data/updates-2026.js</code>. At the start of a new year, copy the year template once and add the new year to
+      <code>assets/data/updates-index.js</code>. The page layout never needs to grow.
+    </div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="container">
+<div class="footer-grid">
+<div><a class="brand" href="index.html"><span class="brand-mark">PK</span><span>Dr. Puneet Kumar<small>Drug Discovery · Chemoinformatics · Computational Biology · ML</small></span></a><p>Investigating disease mechanisms at atomic and molecular resolution and translating those insights into actionable drug discovery strategies.</p></div>
+<div><div class="footer-title">Explore</div><div class="footer-links"><a href="updates.html">Updates</a><a href="publications.html">Publications</a><a href="projects.html">Projects</a><a href="talks.html">Talks</a><a href="teaching.html">Teaching</a><a href="cv.html">Curriculum vitae</a></div></div>
+<div><div class="footer-title">Website visits</div><div class="counter-shell"><div id="visitor-count"><span class="counter-placeholder">Counter activates after GoatCounter setup.</span></div></div><div class="footer-links"><a href="mailto:puneetkumar.phd@gmail.com">puneetkumar.phd@gmail.com</a><a href="https://scholar.google.com/citations?hl=en&amp;user=aHLch4UAAAAJ" rel="noopener" target="_blank">Google Scholar</a><a href="https://www.linkedin.com/in/puneet-kumar-b0312195/" rel="noopener" target="_blank">LinkedIn</a></div></div>
+</div>
+<div class="footer-bottom"><span>© <span data-current-year=""></span> Puneet Kumar. All rights reserved.</span><span>आत्मैव ह्यात्मनो बन्धुः। Meaning: The mind can be one’s greatest friend. </span></div>
+</div>
+</footer>
+</body></html>
