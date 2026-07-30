@@ -113,14 +113,14 @@ window.UPDATE_LIBRARY["2026"] = [
     "date": "2026-07-22",
     "type": "resource",
     "category": "molecular-simulation",
-    "title": "GROMACS documentation and reference manual",
-    "summary": "The official documentation provides installation guidance, user workflows, command references, algorithm descriptions, and version-specific release information for molecular-dynamics simulations.",
-    "url": "https://manual.gromacs.org/",
-    "linkLabel": "Open GROMACS documentation",
+    "title": "GROMACS documentation and tutorial ",
+    "summary": "This is the home of the free online GROMACS tutorials. The tutorials are provided as interactive Jupyter notebooks. This is the same content regularly used in training workshops around GROMACS.",
+    "url": "https://tutorials.gromacs.org/index.html",
+    "linkLabel": "Open GROMACS tutorials",
     "tags": [
       "GROMACS",
       "Molecular dynamics",
-      "Reference manual"
+      "Tutorials"
     ],
     "featured": false,
     "status": "Resource",
