@@ -14,14 +14,24 @@ For a job or deadline, use expires: "YYYY-MM-DD". Leave it empty for other entri
 window.UPDATE_POSTS = window.UPDATE_POSTS || {};
 window.UPDATE_POSTS["2026"] = [
   {
-  "id": "research-associate-opportunity",
+  "id": "Scientist position opportunity",
+  "date": "2026-07-31",
+  "type": "opportunity",
+  "title": "Scientist position opportunity Dept. of BSBE, IIT Roorkee",
+  "summary": "Check link for more info",
+  "url": "https://iitr.ac.in/Careers/static/Project_Jobs/BSBE/2026/adv280720262.pdf",
+  "linkLabel": "View opportunity",
+  "expires": "2026-08-19"
+},
+  {
+  "id": "Research-associate-opportunity",
   "date": "2026-07-31",
   "type": "opportunity",
   "title": "Research associate opportunity Dept. of BSBE, IIT Roorkee",
   "summary": "Check link for more info",
   "url": "https://iitr.ac.in/Careers/static/Project_Jobs/BSBE/2026/adv310720263.pdf",
   "linkLabel": "View opportunity",
-  "expires": "2026-08-19"
+  "expires": "2026-08-20"
 },
   {
     "id": "2026-07-30-gpu-research-environment",
