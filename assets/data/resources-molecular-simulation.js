@@ -9,16 +9,16 @@ window.RESOURCE_LIBRARY["molecular-simulation"] = (window.RESOURCE_LIBRARY["mole
     "code": "",
     "dataset": "",
     "documentation": "https://www.plumed.org/doc",
-    "tags": ["software", "tutorial", "enhanced sampling", "metadynamics", "free energy"]
+    "tags": ["software", "tutorial", "documentation", "enhanced sampling", "metadynamics", "free energy"]
   },
   {
     "name": "GROMACS",
     "description": "A molecular-dynamics software suite for biomolecular simulation, system preparation, trajectory production, and analysis, with support for accelerated computing.",
     "website": "https://www.gromacs.org/",
-    "tutorial": "",
+    "tutorial": "https://tutorials.gromacs.org/index.html",
     "code": "",
     "dataset": "",
     "documentation": "https://manual.gromacs.org/current/index.html",
-    "tags": ["software", "molecular dynamics", "GPU", "trajectory analysis", "documentation"]
+    "tags": ["software", "tutorial", "documentation", "molecular dynamics", "GPU", "biomolecular simulation"]
   }
 ]);
